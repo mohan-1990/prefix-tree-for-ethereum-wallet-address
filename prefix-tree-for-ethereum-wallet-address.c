@@ -1,10 +1,12 @@
 #include <stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<time.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <assert.h>
 
 size_t NUM_WALLET_ADDRESS_SYMBOLS = 16;
 size_t LEN_WALLET_ADDRESS = 40;
+size_t NUM_WALLET_ADDRESS = 2000000;
 
 struct prefix_tree_node
 {
@@ -146,7 +148,7 @@ int main()
 
     srand(time(0));
 
-    for(i=0; i<10; ++i)
+    for(i=0; i<NUM_WALLET_ADDRESS; ++i)
     {
         wallet_address = random_address_generator();
         printf("Addr : %s\n", wallet_address);
@@ -155,6 +157,7 @@ int main()
         printf("%d\tInsert to prefix_tree: %s. Balance: %d\n", i, drop_0x(wallet_address), insert_value);
         return_value = read_from_prefix_tree(prefix_tree_root, drop_0x(wallet_address));
         printf("Return value from prefix_tree: %d\n\n", return_value);
+        assert(insert_value == return_value);
     }
     return 0;
 }
